@@ -1,0 +1,46 @@
+{
+	"index.html": {
+		"resources": [
+			"/js/hui.js"
+		],
+		"refer": [
+			"index_.html",
+			"bbs/all.html",
+			"mine/account.html",
+			"nearby.html",
+			"my.html",
+			"dynamic.html",
+			"indexSub.html",
+			"my/personal.html",
+			"nearby/nearby.html",
+			"index_main.html",
+			"login/login.html"
+		]
+	},
+	"index_.html": {
+		"refer": [
+			"demo/indexaction.html"
+		]
+	},
+	"my/personal.html": {
+		"refer": [
+			"login/login.html"
+		]
+	},
+	"login/login.html": {
+		"refer": [
+			"login/register.html"
+		]
+	},
+	"index_main.html": {
+		"refer": [
+			"indexSub.html",
+			"nearby/nearby.html",
+			"my/personal.html",
+			"dynamic.html"
+		],
+		"resources": [
+			"css/hui.css"
+		]
+	}
+}

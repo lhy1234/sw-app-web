@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>HUI</title>
+<link rel="stylesheet" type="text/css" href="../css/hui.css" />
+<style type="text/css">
+	/**重写列表的样式，使每个li上下没间距**/
+	.hui-media-list li{ margin-bottom:1px; }
+	.hui-media-list-img{width:25%;; font-size:0px;}
+	/*圆形图片*/
+	
+	
+	.
+</style>
+</head>
+<body>
+<header class="hui-header">
+	<h1>附近</h1>
+</header>
+<div class="hui-wrap">
+	<div class="hui-media-list" style="padding:0px;">
+        <ul id="nearbyBox">
+        	
+        </ul>
+    </div>
+</div>
+
+<script src="../js/hui.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/h.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/template-web.js" type="text/javascript" charset="utf-8"></script>
+
+
+<!--附近的人列表 模板-->
+<script id="nearbyList" type="text/html">
+{{each data}}
+	<li>
+	    <a href="javascript:hui.toast('hi...');">
+	        <div class="hui-media-list-img" style="height:20px;border-radius:45px;height: 25vw;">
+	        		<img style="border-radius:45px"  src='{{$value.headImgUrl}}' />
+	        </div> 
+	        <div class="hui-media-content">
+	            <h1>{{$value.nickname}}</h1>
+	            <p>24岁  170cm</p>
+	            <p>对方距你 <span style="color:limegreen">{{$value.distance}}</span> 米</p>
+	        </div>
+	    </a>
+	</li>
+  {{/each}}
+</script>
+        	
+        	
+<script type="text/javascript">
+
+function getNearbyList(){
+	
+	//获取附近的人列表
+    	var token = h.getItem('swToken'); 
+    	var user = JSON.parse(h.getItem('swUser'));
+    	try{
+    		hui.ajax({  
+			    type : 'POST',
+			    url : 'http://192.168.0.115:8080/sw/app/user/position/nearby',  
+			    data : {uid:user.id}, 
+			    header:[["Authorization",'bearer '+token]],  
+			    success : function(res){
+			    	var data = JSON.parse(res);
+			    	console.info('>>>>>>>>> 附近的人列表>>>>>>>>>>>>>>>>>>>：');
+			    	console.info(JSON.stringify(data)); 
+			    	//{"status":200,"msg":"success","data":[{"uid":1001,"nickname":"成熟的人","headImgUrl":null,"sex":2,"distance":0.19}]}
+			    	var html = template("nearbyList",data);
+			    	hui('#nearbyBox').html(html);
+			    	
+			    },
+			    error : function(e){
+			        console.log(JSON.stringify(e));
+			        hui.iconToast('读取消息失败', 'warn');
+			    }
+		});
+    	}catch(e){
+    		alert(e)
+    	}
+    	
+}
+
+hui.ready(function(){
+hui.plusReady(function(){
+	
+	
+	 //附近的人列表
+	 getNearbyList();
+      
+      var userInfo = JSON.parse(h.getItem('swUser'));
+      var token = h.getItem('swToken');
+      //启动app，调用H5+ 获取经纬度信息上送至服务端
+      //位置信息将通过手机GPS设备或其它信息如IP地址、移动网络信号获取，
+      //由于获取位置信息可能需要较长的时间，当成功获取位置信息后将通过successCB回调函数返回。
+      /**
+       * 获取当前设备位置信息
+       * void plus.geolocation.getCurrentPosition(successCB, errorCB, option);
+       * successCB: ( GeolocationSuccessCallback ) 必选 获取设备位置信息成功回调函数
+			errorCB: ( GeolocationErrorCallback ) 可选 获取设备位置信息失败回调函数
+			options: ( PositionOptions ) 可选 获取设备位置信息的参数
+       */
+    
+	plus.geolocation.getCurrentPosition(function(p){   
+		var lat = p.coords.latitude;//维度
+		var lon = p.coords.longitude;//经度
+		//p.coords.altitude;//海拔
+		/*if(lat && lon){
+			alert(userInfo.id+" , "+token) 
+			hui.ajax({  
+			    type : 'POST',
+			    url : 'http://192.168.0.115:8080/sw/app/user/position/loc', 
+			    data : {uid:userInfo.id,longitude:lon,latitude:lat}, 
+			    header:[["Authorization",'bearer '+token]], 
+			    success : function(data){
+			    	console.info('上送地理位置成功：'+data)
+			    },
+			    error : function(e){
+			        console.log(JSON.stringify(e));
+			        hui.iconToast('读取消息失败', 'warn');
+			    }
+			});
+		}*/
+	}, function(e){
+		alert('Geolocation error: ' + e.message);
+	} );
+     
+});
+});
+</script>
+</body>
+</html>

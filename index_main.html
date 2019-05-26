@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="./css/hui.css" />
+</head>
+<body>
+<header class="hui-header">
+    <!--<div id="hui-back"></div>-->
+    <h1 id="indexTitle">首页</h1>
+</header>
+<div class="hui-wrap">
+	首页
+</div>
+<div id="hui-footer">
+    <a href="javascript:void(0);" id="nav-index">
+        <div class="hui-footer-icons hui-icons-home"></div>
+        <div class="hui-footer-text">首页</div>
+    </a>
+    <a href="javascript:void(0);" id="nav-nearby">
+        <div class="hui-footer-icons hui-icons-eyes"></div>
+        <div class="hui-footer-text">发现</div>
+    </a>
+    <div style="width:20%; text-align:center;" class="hui-fl">
+        <img src="img/logo_footer.png" height="44" onclick="hui.back();" />
+    </div>
+    <a  href="javascript:void(0);" id="nav-dynamic">
+        <div class="hui-footer-icons hui-icons-like"></div>
+        <div class="hui-footer-text">动态</div>
+    </a>
+    <a  href="javascript:void(0);" id="nav-my">
+        <div class="hui-footer-icons hui-icons-my"></div>
+        <div class="hui-footer-text">我的</div>
+    </a>
+</div>
+
+<script src="js/hui.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/h.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/template-web.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+//角标提示
+hui('#nav-my').pointMsg();
+hui('#nav-news').pointMsg('hot', null, null, null, '1px');
+hui('#nav-forum').pointMsg(8);
+
+
+//切换页面
+function changeView(id){
+	var view = plus.webview.getWebviewById(id);//plus.webview.getWebviewById(id);
+	view.show();
+}
+
+
+//判断dom元素加载完毕，并在dom元素加载完毕后执行回调函数
+hui.ready(function(){
+	hui.plusReady(function(){ //H5+ 加载完毕	 
+		
+	//子页面
+	var subpage_style = {top:'0 px', bottom:'55px'};
+    var subpages = [{id:'indexSub.html'}, {id:'nearby.html'}, {id:'dynamic.html'},{id:'my/personal.html'}];
+    //创建子页面，首个选项卡页面显示，其它均隐藏；  
+    for(var i=0; i < 4 ; i++){
+    	hui.create(subpages[i].url, subpage_style, false, {});
+    }
+    //默认显示首页  
+    //hui.open('indexSub.html'); 
+    hui.open('indexSub.html',subpage_style,false,{});
+    //
+    hui('#nav-index').click(function(){
+    	hui.open('indexSub.html',subpage_style,false,{});
+    	hui('#indexTitle').html('首页');
+    	
+    	
+	});
+	
+	hui('#nav-nearby').click(function(){
+    	hui.open('nearby/nearby.html',subpage_style,false,{});
+    	hui('#indexTitle').html('附近');
+    	//获取附近的人列表
+    	var token = h.getItem('swToken');
+    	var user = JSON.parse(h.getItem('swUser'));
+    	//alert(user.id) 
+    	/*hui.ajax({  
+			    type : 'POST',
+			    url : 'http://192.168.0.115:8080/sw/app/user/position/nearby',  
+			    data : {uid:user.id}, 
+			    header:[["Authorization",'bearer '+token]],  
+			    success : function(data){
+			    	alert(data);
+			    	console.info('>>>>>>>>> 附近的人列表>>>>>>>>>>>>>>>>>>>：');
+			    	console.info(data); 
+			    	
+			    },
+			    error : function(e){
+			        console.log(JSON.stringify(e));
+			        hui.iconToast('读取消息失败', 'warn');
+			    }
+		});*/
+	});
+	
+	hui('#nav-dynamic').click(function(){
+    	hui.open('dynamic.html',subpage_style,false,{});
+    	hui('#indexTitle').html('动态');
+	});
+	
+	hui('#nav-my').click(function(){
+    	hui.open('my/personal.html',subpage_style,false,{});
+    	hui('#indexTitle').html('我的');
+	});
+	
+    
+});
+});
+
+
+
+	
+	
+	
+</script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>HUI</title>
+<link rel="stylesheet" type="text/css" href="./css/hui.css" />
+</head>
+<body>
+
+<div class="hui-wrap">
+	<div style="padding:1px;">
+	    <div class="hui-swipe" id="swipe">
+	    	<div class="hui-swipe-items">
+	            <div class="hui-swipe-item"><img src="img/swipe/1.jpg"/></div>
+	            <div class="hui-swipe-item"><img src="img/swipe/2.jpg"/></div>
+	            <div class="hui-swipe-item"><img src="img/swipe/3.jpg"/></div>
+	            <div class="hui-swipe-item"><img src="img/swipe/4.jpg"/></div>
+	        </div>
+	    </div>
+	</div>
+	<!--广告-->
+	<div style="background:#FFF; padding:0px 15px; margin:1px;" class="hui-flex">
+		<div style="height:46px; width:20px;">
+	        <img src="img/spiker.png" width="20" style="padding:13px 0px;" />
+	    </div>
+		<div class="hui-scroll-news" id="scrollnew1">
+	        <div class="hui-scroll-news-items"><a href="javascript:hui.toast('test...');">一块橘子皮就能秒开你的手机</a></div>
+	        <div class="hui-scroll-news-items">新一轮成品油价或迎年内首次"二连涨"</div>
+	        <div class="hui-scroll-news-items">暴雪再袭长三角：交通遭重创 用电量增 菜价涨</div>
+	    </div>
+   </div>
+    <!--菜单栏-->
+    <style type="text/css">
+	.demo1{width:25%; height:80px; text-align:center; color:#FFF; line-height:80px; font-size:22px; margin-top:5px; background:#3388FF;}
+	.bgGreen{background:#1BC5BB !important;}
+	.bgRed{background:#EE4B47 !important;}
+    </style>
+	<div class="hui-flex" style="flex-wrap:wrap;">
+		<div class="demo1 bgGreen">1</div>
+		<div class="demo1 bgRed">2</div>
+		<div class="demo1 bgGreen">3</div>
+		<div class="demo1 bgRed">4</div>
+		<div class="demo1 bgRed">5</div>
+		<div class="demo1 bgGreen">6</div>
+		<div class="demo1 bgRed">6</div>
+		<div class="demo1 bgGreen">6</div>
+	</div>
+	<!--
+    	作者：1329845766@163.com
+    	时间：2019-05-16
+    	描述：列表
+    -->
+    <style>
+    #list2 li{width:50%; float:left; 0px;}
+    #list2 .hui-img-list-content{padding:5px; padding-bottom:10px;}
+    #list2 h1{font-size:14px;}
+    </style>
+    <div class="hui-img-list" id="list2" style="padding:10px 5px;">
+        <ul>
+            <li>
+                <a href="javascript:hui.toast('hi...');">
+                    <img src="img/imglist/3.jpg" />
+                    <div class="hui-img-list-content">
+                        <h1>标题内容....</h1>
+                        <p>power by hcoder.net</p>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:hui.toast('hi...');">
+                    <img src="img/imglist/4.jpg" />
+                    <div class="hui-img-list-content">
+                        <h1>标题内容....</h1>
+                        <p>power by hcoder.net</p>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:hui.toast('hi...');">
+                    <img src="img/imglist/1.jpg" />
+                    <div class="hui-img-list-content">
+                        <h1>标题内容....</h1>
+                        <p>power by hcoder.net</p>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:hui.toast('hi...');">
+                    <img src="img/imglist/2.jpg" />
+                    <div class="hui-img-list-content">
+                        <h1>标题内容....</h1>
+                        <p>power by hcoder.net</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script src="./js/hui.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/hui-swipe.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+var swipe = new huiSwpie('#swipe');
+swipe.autoPlay = false;
+swipe.run();
+
+//单行公告
+hui.scrollNews(scrollnew1);
+
+
+//加载远程图片示例
+hui.get(
+    'http://hoa.hcoder.net/index.php?user=hcoder&pwd=hcoder&m=lunbo',
+    function(res){
+        var arr  = res.split('--hcSplitor--');
+        for(var i = 0; i < arr.length; i++){
+            var div = document.createElement('div')
+            div.setAttribute('class', 'hui-swipe-item');
+            div.innerHTML = arr[i];
+            hui(div).appendTo('#swipe2 .hui-swipe-items');
+        }
+        var swipe2 = new huiSwpie('#swipe2');
+        swipe2.run();
+    },
+    function(){
+        hui.toast('读取远程数据失败');
+    }
+);
+</script>
+</body>
+</html>
