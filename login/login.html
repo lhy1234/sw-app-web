@@ -31,10 +31,14 @@
     	<img src="../img/my-logo.png" /> 
     </div>
     <form style="padding:28px 10px;" class="hui-form" id="loginForm">
-		<div class="hui-form-items">
+		<!--<div class="hui-form-items">
     		<div class="hui-form-items-title">手机号</div>
         	<input id="mobile" checkType="phone" checkMsg="请输入正确手机号" type="text" class="hui-input hui-input-clear" name="mobile" placeholder="请输入手机号" />
-    	</div>
+    	</div>-->
+    	 <div class="hui-form-items">
+            <div class="hui-form-items-title">用户名</div><!--checkData="5,20" checkMsg="用户名应为5-20个字符"--> 
+            <input id="username" type="text" name="username" class="hui-input hui-input-clear" placeholder="请输入用户名" checkData="3,20" checkMsg="用户名应为3-20个字符" checkType="string"  />
+        </div>
         <div class="hui-form-items">
         	<div class="hui-form-items-title">密码</div>
             <input id="password" type="password" name="password" class="hui-input hui-pwd-eye" placeholder="请输入密码" />
@@ -95,27 +99,25 @@
 			 //表单校验
 			 var rs = huiFormCheck('#loginForm');
 			 if(rs){
-			 	var mobile = hui('#mobile').val();
-				var password = hui('#password').val();
-				hui.toast('手机号：'+mobile+" 密码："+password);
+			 	//var mobile = hui('#mobile').val();
+			 	var username = hui('#username').val(); 
+				var password = hui('#password').val(); 
+				//hui.toast('用户名 ：'+username+" 密码："+password);  
+				hui.toast(username+" >>> "+password);
 				//请求服务端 
-				hui.ajax({ 
+				hui.ajax({  
 				    type : 'POST', 
 				    url : 'http://192.168.0.115:8080/sw/app/authentication/account',
-				    data : {username:mobile, password:password},
+				    data : {username:username, password:password},
 				    header:[["Authorization","Basic bGh5OmxoeWFwcA=="]],
-				    beforeSend : function(){
-				    	
-				    },
-				    complete   : function(){hui.closeLoading();},
 				    success : function(msg){
-				    	var rs = JSON.parse(msg);
+				    	var rs = JSON.parse(msg); 
 				    	var token = rs.access_token;
 				    	//获取到token后再获取用户信息，应该一并返回的。待优化。。。。
 				    	hui.ajax({ 
 						    type : 'POST',
 						    url : 'http://192.168.0.115:8080/sw/app/users/me',
-						   // data : {name:'hcoder', age:10}, 
+						    data : {token:token}, 
 						    header:[["Authorization",'bearer '+token]], 
 						    success : function(data){
 						    	console.info("登录成功获取到用户信息："+data);  
@@ -128,6 +130,9 @@
 					    		
 					    		console.info("获取存储信息："+h.getItem('swToken'))
 					    		console.info("获取存储信息："+h.getItem('swUser'))
+					    		
+					    		//打开首页
+					    		hui.open('../index_main.html');
 						    },
 						    error : function(e){
 						        console.log(JSON.stringify(e));

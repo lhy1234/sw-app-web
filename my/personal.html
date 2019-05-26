@@ -102,28 +102,38 @@
         </ul>
     </div>
     <div id="logoutDiv" style="background:#FFFFFF; margin-top:28px;">
-        <button type="button" class="hui-button hui-button-large" onclick="hui.toast('退出');">
+        <button type="button" class="hui-button hui-button-large" id="logoutBtn">
         	<span class="hui-icons hui-icons-logoff"></span>退出系统
        	</button>
     </div>
 </div>
 <script type="text/javascript" src="../js/hui.js" charset="UTF-8"></script>
 <script type="text/javascript" src="../js/h.min.js" charset="UTF-8"></script>
-
+<script type="text/javascript" src="../js/sw-util.js" charset="UTF-8"></script>
 <script>
+	
+	
 
 //hui.ready()用于判断dom加载而hui.plusReady()用于判断扩展API加载完成
 
 
 hui.ready(function(){
     hui.plusReady(function(){
+    	
+    	if(!isLogin()){ 
+			hui.open('../login/login.html');
+		}
         
         var userInfo = JSON.parse(h.getItem('swUser'));
         console.info('个人中心页：'+userInfo)
         hui('#nickname').html(userInfo.username);
            
        
-        
+        //退出登录
+        hui('#logoutBtn').click(function(){
+        	h.clearItem();
+        	hui.open('../login/login.html');
+        }); 
         
         
     });

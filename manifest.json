@@ -174,13 +174,16 @@
 			"login/login.html": {
 				"resources": [],
 				"refer": [
-					"login/register.html"
+					"login/register.html",
+					"index_main.html"
 				],
 				"priority": 0
 			},
 			"index_main.html": {
 				"resources": [
-					"css/hui.css"
+					"css/hui.css",
+					"js/template-web.js",
+					"img/logo_footer.png"
 				],
 				"refer": [
 					"indexSub.html",
@@ -258,7 +261,6 @@
 				"img/index/create.png",
 				"img/waterfull/water1.jpg",
 				"demo/eventband.html",
-				"img/logo_footer.png",
 				"demo/swipe.html",
 				"demo/imgnews.html",
 				"img/waterfull/water9.jpg",

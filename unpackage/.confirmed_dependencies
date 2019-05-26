@@ -29,7 +29,8 @@
 	},
 	"login/login.html": {
 		"refer": [
-			"login/register.html"
+			"login/register.html",
+			"index_main.html"
 		]
 	},
 	"index_main.html": {
@@ -40,7 +41,9 @@
 			"dynamic.html"
 		],
 		"resources": [
-			"css/hui.css"
+			"css/hui.css",
+			"js/template-web.js",
+			"img/logo_footer.png"
 		]
 	}
 }
